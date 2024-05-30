@@ -1,0 +1,10 @@
+nop
+li x1, 16
+li x2, 14
+nop
+nop
+nop
+jalr x3, 0(x1)
+sub x2, x2, x1
+target:
+add x2,x2, x1

@@ -1,0 +1,3 @@
+nop
+nop
+auipc x3, 42000

@@ -1,0 +1,108 @@
+    nop
+    li a0, 0
+    sw a0, 0(x0)
+    li a0, -1024
+    sw a0, 4(x0)
+    li a0, -512
+    sw a0, 8(x0)
+    li a0, -256
+    sw a0, 12(x0)
+    li a0, 15
+    sw a0, 16(x0)
+    li a0, -20
+    sw a0, 20(x0)
+    li a0, 31
+    sw a0, 24(x0)
+    li a0,0x00000000
+    sw a0, 28(x0)
+    li a0,0x00000000
+    sw a0, 32(x0)
+    li a0,0x00000000
+    sw a0, 36(x0)
+    li a0,0x00000000
+    sw a0, 40(x0)
+
+
+main:
+    li a5, 0    # Load upper immediate: a5 = 0x10
+    lw a0, 24(a5)   # Load word from memory at 0x10 + 24 into a0
+    lui a3, 0    # Load upper immediate: a3 = 0x10
+    lui a2, 0    # Load upper immediate: a2 = 0x10
+    lui a1, 0    # Load upper immediate: a1 = 0x10
+    addi a3, a3, 28 # Adjust a3
+    mv a2, a2       # Move a2 to itself (no effect)
+    addi a1, a1, 16 # Adjust a1
+    jal ra, maxx    # Call maxx function
+    li a0, 0        # Load immediate: a0 = 0
+    nop
+    nop
+    nop
+end : jal end             # Return
+
+maxx:
+    lw a4,0(a1)     # Load word from memory at address pointed by a1 into a4
+    lw a5,4(a1)     # Load word from memory at address pointed by a1 + 4 into a5
+    add a0,a0,a4    # Add a4 to a0 and store in a0
+    lw a4,4(a2)     # Load word from memory at address pointed by a2 + 4 into a4
+    add a6,a0,a5    # Add a5 to a0 and store in a6
+    lw a1,0(a2)     # Load word from memory at address pointed by a2 into a1
+    add a4,a6,a4    # Add a4 to a6 and store in a4
+    mv a7,a1        # Move a1 to a7
+    ble a4,a1,jump1 # Branch less than or equal: If a4 <= a1, jump to jump1
+    mv a7,a4        # Move a4 to a7
+jump1:
+    sub a1,a1,a4    # Subtract a4 from a1 and store in a1
+    addi a1,a1,15   # Add immediate 15 to a1
+    li a4,30        # Load immediate: a4 = 30
+    bltu a4,a1,jump2 # Branch less than unsigned: If a4 < a1, jump to jump2
+    addi a7,a7,3    # Add immediate 3 to a7
+jump2:
+    sw a7,0(a3)     # Store word from a7 to memory at address pointed by a3
+    lw a4,12(a2)    # Load word from memory at address pointed by a2 + 12 into a4
+    lw a1,8(a2)     # Load word from memory at address pointed by a2 + 8 into a1
+    add a4,a5,a4    # Add a4 to a5 and store in a4
+    add a1,a0,a1    # Add a1 to a0 and store in a1
+    mv a7,a4        # Move a4 to a7
+    ble a1,a4,jump3 # Branch less than or equal: If a1 <= a4, jump to jump3
+    mv a7,a1        # Move a1 to a7
+jump3:
+    sub a4,a4,a1    # Subtract a1 from a4 and store in a4
+    addi a4,a4,15   # Add immediate 15 to a4
+    li a1,30        # Load immediate: a1 = 30
+    bltu a1,a4,jump4 # Branch less than unsigned: If a1 < a4, jump to jump4
+    addi a7,a7,3    # Add immediate 3 to a7
+jump4:
+    sw a7,4(a3)     # Store word from a7 to memory at address pointed by a3 + 4
+    lw a1,0(a2)     # Load word from memory at address pointed by a2 into a1
+    lw a4,4(a2)     # Load word from memory at address pointed by a2 + 4 into a4
+    add a1,a6,a1    # Add a1 to a6 and store in a1
+    mv a6,a4        # Move a4 to a6
+    ble a1,a4,jump5 # Branch less than or equal: If a1 <= a4, jump to jump5
+    mv a6,a1        # Move a1 to a6
+jump5:
+    sub a4,a4,a1    # Subtract a1 from a4 and store in a4
+    addi a4,a4,15   # Add immediate 15 to a4
+    li a1,30        # Load immediate: a1 = 30
+    bltu a1,a4,jump6 # Branch less than unsigned: If a1 < a4, jump to jump6
+    addi a6,a6,3    # Add immediate 3 to a6
+jump6:
+    sw a6,8(a3)     # Store word from a6 to memory at address pointed by a3 + 8
+    lw a4,12(a2)    # Load word from memory at address pointed by a2 + 12 into a4
+    lw a1,8(a2)     # Load word from memory at address pointed by a2 + 8 into a1
+    add a0,a0,a4    # Add a4 to a0 and store in a0
+    add a5,a5,a1    # Add a1 to a5 and store in a5
+    mv a4,a5        # Move a5 to a4
+    ble a0,a5,jump7 # Branch less than or equal: If a0 <= a5, jump to jump7
+    mv a4,a0        # Move a0 to a4
+jump7:
+    sub a5,a5,a0    # Subtract a0 from a5 and store in a5
+    addi a5,a5,15   # Add immediate 15 to a5
+    li a2,30        # Load immediate: a2 = 30
+    bltu a2,a5,jump8 # Branch less than unsigned: If a2 < a5, jump to jump8
+    addi a4,a4,3    # Add immediate 3 to a4
+jump8:
+    sw a4,12(a3)    # Store word from a4 to memory at address pointed by a3 + 12
+    nop
+    nop
+    nop
+    ret             # Return

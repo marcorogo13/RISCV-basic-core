@@ -1,0 +1,6 @@
+li x1, -1
+li x2, 1234
+bltu a2, x1, target
+sub x4, x1, x2
+target:
+add x3, x1, x2 

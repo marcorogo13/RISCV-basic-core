@@ -1,0 +1,22 @@
+li a0,0x00000000
+sw a0, 0(x0)
+li a0,0xfc00ffff
+sw a0, 4(x0)
+li a0,0xfe00ffff
+sw a0, 8(x0)
+li a0,0xff00ffff
+sw a0, 12(x0)
+li a0,0x0000000f
+sw a0, 16(x0)
+li a0,0xffecffff
+sw a0, 20(x0)
+li a0,0x0000001f
+sw a0, 24(x0)
+li a0,0x00000000
+sw a0, 28(x0)
+li a0,0x00000000
+sw a0, 32(x0)
+li a0,0x00000000
+sw a0, 36(x0)
+li a0,0x00000000
+sw a0, 40(x0)
